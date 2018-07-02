@@ -1,9 +1,26 @@
-// Select color input
-// Select size input
+/*
+*
+* changeColor
+*
+*/
+function changeColor(event) {
+  //console.log(event);
+  let selectedColor =  document.querySelector('#colorPicker').value;
+  if( event.target.hasAttribute("style") && rgbToHex(event.target.style.backgroundColor) !== selectedColor) {
 
-//global variables
-let selectedColor = "#000000";
+    event.target.style.backgroundColor = selectedColor;
 
+
+  } else if( event.target.hasAttribute("style") ){
+
+    event.target.removeAttribute("style");
+
+  } else {
+
+    event.target.style.backgroundColor = selectedColor;
+  }
+
+}
 
 /*
 *
@@ -40,6 +57,7 @@ function makeGrid(event) {
   	for(let j = 0; j < width; j++) {
 
       		let column = document.createElement('td');
+          column.onclick = changeColor;
           row.appendChild(column);
 
   	} //end for j
@@ -48,44 +66,6 @@ function makeGrid(event) {
 
   } //end for i
 
-}
-
-/*
-*
-* applyColorToCell
-*
-*/
-function applyColorToCell(event) {
-  //console.log(event);
-
-  //the cell has a color background, but the  color is not equal als the selectedColor
-  if ( event.target.hasAttribute("style") && rgbToHex(event.target.style.backgroundColor) !== selectedColor ) {
-
-    event.target.style.backgroundColor = selectedColor;
-    //console.log("inside &&: selected color:"+selectedColor + ", backgroundColor"+ event.target.style.backgroundColor);
-
-  } else if( event.target.hasAttribute("style") ) {
-    //console.log("inside else if");
-
-    event.target.removeAttribute("style");
-
-  } else {
-    //console.log("inside else");
-
-    event.target.style.backgroundColor = selectedColor;
-
-  }
-
-}
-
-/*
-*
-* selectColorFromColorPicker
-*
-*/
-function selectColorFromColorPicker(event){
-  //returns the color in #format
-  selectedColor = event.target.value;
 }
 
 /*
@@ -111,5 +91,3 @@ function rgbToHex(col)
 
 //Eventlisteners
 document.addEventListener('submit', makeGrid);
-document.querySelector('#pixelCanvas').addEventListener('click',applyColorToCell);
-document.querySelector('#colorPicker').addEventListener('input',selectColorFromColorPicker);
